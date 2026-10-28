@@ -1,0 +1,15 @@
+from huggingface_hub import InferenceClient
+
+client = InferenceClient(
+    api_key="YOUR_HUGGINGFACE_API_KEY"
+)
+
+prompt = input("Enter your prompt: ")
+
+response = client.text_generation(
+    prompt,
+    model="HuggingFaceTB/SmolLM3-3B"
+)
+
+print("\nGenerated Output:")
+print(response)

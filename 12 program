@@ -1,0 +1,66 @@
+from openai import OpenAI
+
+client = OpenAI()
+
+task = "Explain the benefits of Artificial Intelligence."
+
+# Prompt 1
+prompt1 = f"""
+{task}
+"""
+
+# Prompt 2
+prompt2 = f"""
+Explain the benefits of Artificial Intelligence
+in simple language using 5 points.
+"""
+
+# Prompt 3 - Refined prompt
+prompt3 = f"""
+Explain the benefits of Artificial Intelligence.
+
+Requirements:
+1. Give exactly 5 points.
+2. Use simple English.
+3. Each point should be clear and short.
+4. Include practical examples.
+5. Use numbered format.
+"""
+
+def generate(prompt):
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=prompt
+    )
+    return response.output_text
+
+output1 = generate(prompt1)
+output2 = generate(prompt2)
+output3 = generate(prompt3)
+
+print("\n===== PROMPT 1 =====")
+print(output1)
+
+print("\n===== PROMPT 2 =====")
+print(output2)
+
+print("\n===== REFINED PROMPT 3 =====")
+print(output3)
+
+print("\n===== EVALUATION =====")
+
+print("""
+Evaluation Criteria:
+1. Relevance
+2. Accuracy
+3. Completeness
+4. Clarity
+5. Format Adherence
+""")
+
+print("Prompt 1: Basic prompt")
+print("Prompt 2: More specific prompt")
+print("Prompt 3: Refined prompt with clear requirements")
+
+print("\nBest Prompt: Prompt 3")
+print("Reason: It provides clear instructions and output format.")

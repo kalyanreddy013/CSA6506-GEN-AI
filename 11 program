@@ -1,0 +1,59 @@
+from openai import OpenAI
+
+client = OpenAI()
+
+task = "Explain Artificial Intelligence in simple words."
+
+# Zero-shot Prompt
+zero_shot = f"""
+{task}
+"""
+
+# One-shot Prompt
+one_shot = f"""
+Example:
+Question: Explain Machine Learning.
+Answer: Machine Learning allows computers to learn from data.
+
+Now answer:
+{task}
+"""
+
+# Few-shot Prompt
+few_shot = f"""
+Example 1:
+Question: Explain Machine Learning.
+Answer: Machine Learning allows computers to learn from data.
+
+Example 2:
+Question: Explain Deep Learning.
+Answer: Deep Learning uses neural networks to learn complex patterns.
+
+Example 3:
+Question: Explain NLP.
+Answer: NLP helps computers understand human language.
+
+Now answer:
+{task}
+"""
+
+def generate(prompt):
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=prompt
+    )
+    return response.output_text
+
+print("\n===== ZERO-SHOT =====")
+print(generate(zero_shot))
+
+print("\n===== ONE-SHOT =====")
+print(generate(one_shot))
+
+print("\n===== FEW-SHOT =====")
+print(generate(few_shot))
+
+print("\n===== COMPARISON =====")
+print("Zero-shot : No examples are provided.")
+print("One-shot  : One example is provided.")
+print("Few-shot  : Multiple examples are provided.")

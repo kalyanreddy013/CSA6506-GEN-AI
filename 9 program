@@ -1,0 +1,37 @@
+from openai import OpenAI
+
+client = OpenAI()
+
+problem = input("Enter the computational problem: ")
+
+prompt = f"""
+You are a Python programming expert.
+
+Generate a Python program for the following problem.
+
+Problem:
+{problem}
+
+Requirements:
+1. Use simple Python.
+2. Take input from the user.
+3. Display the output clearly.
+4. Add short comments.
+5. Return only the Python code.
+"""
+
+response = client.responses.create(
+    model="gpt-4.1-mini",
+    input=prompt
+)
+
+code = response.output_text
+
+print("\nGenerated Python Code:")
+print(code)
+
+# Basic validation
+if "input(" in code and "print(" in code:
+    print("\nValidation: Code contains input and output statements.")
+else:
+    print("\nValidation: Check the generated code manually.")

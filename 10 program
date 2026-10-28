@@ -1,0 +1,42 @@
+from openai import OpenAI
+
+client = OpenAI()
+
+schema = """
+Database: College
+
+Table: Students
+Columns:
+student_id INT
+name VARCHAR
+department VARCHAR
+age INT
+marks INT
+"""
+
+requirement = input("Enter your SQL requirement: ")
+
+prompt = f"""
+You are an SQL expert.
+
+Database Schema:
+{schema}
+
+Requirement:
+{requirement}
+
+Generate the correct SQL query.
+
+Rules:
+1. Use only the tables and columns provided.
+2. Return only the SQL query.
+3. Use standard SQL syntax.
+"""
+
+response = client.responses.create(
+    model="gpt-4.1-mini",
+    input=prompt
+)
+
+print("\nGenerated SQL Query:")
+print(response.output_text)
